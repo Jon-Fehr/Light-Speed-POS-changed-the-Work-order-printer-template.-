@@ -96,18 +96,26 @@ table.totals td {
         
 table.lines th {
     font-size: 10pt;
-    border-bottom: 1px solid #000;
+    border: 1px solid #000;
     margin-bottom: 3px;
     text-align: left;
+	
 }
 
 table.lines td.notes {
     margin-left: 15px;
 }
 
+table.lines td.custom_Sku {
+ margin-left: 15px;
+  border: 1px solid Orange;
+}
+
 table td.amount {
     width: 10%;
     text-align: left;
+	color: green; 
+	border: 1px solid green;
 }
         
 table.totals {
@@ -206,7 +214,7 @@ img.barcode {
                     <p>{{ ContactEmail.address }}</p>
                 {% endfor %}
                 <br />
-                {% for serializedID in Workorder.Serialized %} <!-- This is for the description we enter in on the work order not for the table row -->
+                {% for serializedID in Workorder.Serialized %} <!-- This is for the description we enter in on the work order NOT for the table row -->
                     <h3>Work Order Item:</h3>
                         <p>{% if Workorder.Serialized.description|strlen > 0 %}
                             {{ Workorder.Serialized.description }}
@@ -230,11 +238,15 @@ img.barcode {
 
             <table class="lines">
                 <tr>
+					
                     <th>Item/Labor</th>
                     <th>Notes</th>
-                        <th>Charge</th>
+					<th> SKU </th> 
+                    <th>Charge</th>
                 </tr>
-                {% for WorkorderItem in Workorder.WorkorderItems.WorkorderItem %}
+               
+
+			   {% for WorkorderItem in Workorder.WorkorderItems.WorkorderItem %}
                 <tr>
                     {% if WorkorderLine.itemID != 0 %}
                         <td class="description">
@@ -254,6 +266,10 @@ img.barcode {
                         <td class="notes">
                             {{ WorkorderItem.note }}
                         </td>
+						
+						{% if options.show_custom_sku and Line.Item.customSku %}
+							<td class="custom_Sku">{{ Line.Item.customSku }}</td>
+						{% endif %} 
 
                         {% if WorkorderItem.warranty == 'true' %}
                             <td class="amount"> $0.00
@@ -266,6 +282,8 @@ img.barcode {
                         {% endif %}
                     </tr>
                 {% endfor %}
+				
+				
                 
                 {% for WorkorderLine in Workorder.WorkorderLines.WorkorderLine %} <!--this loop is necessary for showing labor charges -->
                     <tr>
@@ -289,6 +307,10 @@ img.barcode {
                                 {% endif %}
                             </td>
                         {% endif %}
+						
+						<td class="custom_Sku">
+							 {{ Line.Item.customSku }}
+						</td>
                         
                         <td class="amount">
                             {{ WorkorderLine.SaleLine.calcSubtotal|money }}
