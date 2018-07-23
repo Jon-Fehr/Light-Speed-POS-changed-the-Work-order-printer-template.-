@@ -104,18 +104,18 @@ table.lines th {
 
 table.lines td.notes {
     margin-left: 15px;
+	width: 45%;
 }
 
 table.lines td.custom_Sku {
  margin-left: 15px;
-  border: 1px solid Orange;
+ 
+  width: 10%;
 }
 
 table td.amount {
     width: 10%;
     text-align: left;
-	color: green; 
-	border: 1px solid green;
 }
         
 table.totals {
@@ -265,11 +265,13 @@ img.barcode {
                 
                         <td class="notes">
                             {{ WorkorderItem.note }}
+							
                         </td>
 						
-						{% if options.show_custom_sku and Line.Item.customSku %}
-							<td class="custom_Sku">{{ Line.Item.customSku }}</td>
-						{% endif %} 
+							<td class="custom_Sku">
+								{{ WorkorderItem.Item.customSku }}
+							</td>
+						
 
                         {% if WorkorderItem.warranty == 'true' %}
                             <td class="amount"> $0.00
@@ -301,6 +303,7 @@ img.barcode {
                         {% else %}
                             <td class="notes" colspan="2">
                             {{ WorkorderLine.note }}
+							
                                 {% if WorkorderLine.Discount %}
                                     <br />
                                     Discount: {{ WorkorderLine.Discount.name }} (-{{ WorkorderLine.SaleLine.calcLineDiscount|money }})
@@ -308,9 +311,7 @@ img.barcode {
                             </td>
                         {% endif %}
 						
-						<td class="custom_Sku">
-							 {{ Line.Item.customSku }}
-						</td>
+						
                         
                         <td class="amount">
                             {{ WorkorderLine.SaleLine.calcSubtotal|money }}
