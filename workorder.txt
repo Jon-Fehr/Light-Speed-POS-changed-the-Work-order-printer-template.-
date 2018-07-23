@@ -189,6 +189,7 @@ img.barcode {
 				<h3>Shop Info:</h3>
 				<p>  W - {{Workorder.workorderID}} </p>
 				<p> Employee: {{Workorder.Employee.firstName}} </p>
+				<p> {{"now"|date(getDateTimeFormat())}} </p> <!-- grapefruit : need to get the correct time -->
 				<br>
 				
 			
