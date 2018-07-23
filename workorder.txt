@@ -189,7 +189,7 @@ img.barcode {
 				<h3>Shop Info:</h3>
 				<p>  W - {{Workorder.workorderID}} </p>
 				<p> Employee: {{Workorder.Employee.firstName}} </p>
-				<p> {{"now"|date(getDateTimeFormat())}} </p> <!-- grapefruit : need to get the correct time -->
+				<p> {{"now"|correcttimezone|date(getDateTimeFormat())}} </p> 
 				<br>
 				
 			
@@ -206,7 +206,7 @@ img.barcode {
                     <p>{{ ContactEmail.address }}</p>
                 {% endfor %}
                 <br />
-                {% for serializedID in Workorder.Serialized %}
+                {% for serializedID in Workorder.Serialized %} <!-- This is for the description we enter in on the work order not for the table row -->
                     <h3>Work Order Item:</h3>
                         <p>{% if Workorder.Serialized.description|strlen > 0 %}
                             {{ Workorder.Serialized.description }}
